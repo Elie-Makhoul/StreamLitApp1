@@ -6,6 +6,7 @@ body {
 }
 
 .card {
+  background-color: #333333; /* Dark grey background */
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -16,4 +17,3 @@ body {
 .card h1 {
   color: #ffffff; /* White text */
 }
-/* background-color: #333333; Dark grey background */
