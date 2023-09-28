@@ -7,7 +7,7 @@ from streamlit_dynamic_filters import DynamicFilters
 # Load the data
 
 
-df = pd.read_csv("project_Data_modified.csv")
+df = pd.read_csv("csv/project_Data_modified.csv")
 
 # Set page configuration
 st.set_page_config(page_title="Project's Dashboard",
