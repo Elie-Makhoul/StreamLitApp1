@@ -6,7 +6,7 @@ body {
 }
 
 .card {
-  /* background-color: #333333; Dark grey background */
+  background-color: #333333; /* Dark grey background */
   padding: 20px;
   border-radius: 10px;
   text-align: center;
