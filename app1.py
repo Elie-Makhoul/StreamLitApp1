@@ -88,7 +88,7 @@ fig1 = px.bar(
     color='story status',
     barmode='group',
     title='Stories by Project',
-    labels={'projectName': 'Project', 'storyKey_count': 'Story Count'},
+    labels={'projectName': 'Project', 'storyKey_count': 'Story'},
     color_discrete_map=color_map
 
 )
