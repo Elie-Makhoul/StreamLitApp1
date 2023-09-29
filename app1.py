@@ -33,8 +33,6 @@ dynamic_filters = DynamicFilters(
     df, filters=['project Name', 'sprint Name', 'story Type'], )
 
 
-# SideBar
-
 with st.sidebar:
     st.sidebar.header("Please Filter Here:")
     dynamic_filters.display_filters()
