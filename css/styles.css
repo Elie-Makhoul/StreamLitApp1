@@ -2,9 +2,21 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  /* background-color: #00008b; */
+}
+
+/* div.lock-containerst-emotion-cache-ysnqb2ea3mdgi4 {
   background-color: #00008b;
 }
 
+.mainst-emotion-cache-uf99v8ea3mdgi5 {
+  background-color: #00008b;
+} */
+
+/* div.block-containerst-emotion-cache-z5fcl4ea3mdgi4 {
+  background-color: #00008b;
+}
+*/
 .card {
   background-color: #333333; /* Dark grey background */
   padding: 20px;
