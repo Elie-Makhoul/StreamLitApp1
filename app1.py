@@ -58,7 +58,8 @@ filtered_df = filtered_df.rename(columns={'storystatus(list)': 'story status'})
 # Calculate the story counts per project and story status
 project_story_count = filtered_df.groupby(['projectName', 'story status'])[
     'storyKey'].count().reset_index()
-project_story_count.columns = ['projectName', 'story status', 'storyKey_count']
+project_story_count.columns = ['projectName',
+                               'story status',  'storyKey_count']
 
 
 color_map = {'done': 'green', 'not done': 'red'}
@@ -73,7 +74,8 @@ fig1 = px.bar(
     barmode='group',
     title='Stories by Project',
     labels={'projectName': 'Project', 'storyKey_count': 'Story'},
-    color_discrete_map=color_map
+    color_discrete_map=color_map,
+
 
 )
 
@@ -108,9 +110,10 @@ storytype_story_count = filtered_df.groupby(
 
 # If there's only one story type, add a default row with count 1
 if len(storytype_story_count) == 1:
-    default_row = pd.DataFrame({'storyType': ['Default'], 'story_count': [1]})
+    default_row = pd.DataFrame(
+        {'storyType': ['Default'], 'story_count': [0]}, )
     storytype_story_count = pd.concat(
-        [storytype_story_count], ignore_index=True)
+        [storytype_story_count, default_row], ignore_index=True)
 
 
 # Create a treemap using Plotly Express
