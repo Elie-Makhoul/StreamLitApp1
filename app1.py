@@ -3,9 +3,7 @@ import plotly.express as px
 import streamlit as st
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
-# import dash
-# from dash import dcc, html
-# from dash.dependencies import Input, Output
+from streamlit_plotly_events import plotly_events
 
 # Load the data
 
@@ -61,11 +59,16 @@ project_story_count = filtered_df.groupby(['projectName', 'story status'])[
 project_story_count.columns = ['projectName',
                                'story status',  'storyKey_count']
 
+sprint_df = filtered_df[['projectName', 'sprintName']]
 
-color_map = {'done': 'green', 'not done': 'red'}
+merged_df = pd.merge(project_story_count, sprint_df,
+                     on='projectName', how='left')
 
 
 # Create the column chart using Plotly Express
+
+color_map = {'done': 'green', 'not done': 'red'}
+
 fig1 = px.bar(
     project_story_count,
     x='projectName',
@@ -78,7 +81,6 @@ fig1 = px.bar(
 
 
 )
-
 # Update hover data to show the count of each story status
 fig1.update_traces(texttemplate='%{y}', textposition='outside')
 fig1.update_layout(legend_title_text='Story Status')
@@ -90,18 +92,16 @@ fig1.update_layout(
         color='black',
     ),
 
+
     legend=dict(
         orientation='h',  # Set the orientation to horizontal
         x=0,  # Move the legend to the left
         y=1.1  # Adjust the position if needed
     ),
 
-    height=600
+    height=600,
+
 )
-
-
-# Display the column chart
-# st.plotly_chart(fig1)
 
 
 # Calculate story counts by story type
