@@ -60,50 +60,6 @@ project_story_count.columns = ['projectName',
                                'story status',  'storyKey_count']
 
 
-# # Create a list of unique project names
-# unique_projects = project_story_count['projectName'].unique().tolist()
-
-# # Selectbox to choose a project (default to showing all projects)
-# selected_project = st.selectbox('Select a project:', ['All'] + unique_projects)
-
-# if selected_project != 'All':
-#     project_filtered_df = project_story_count[project_story_count['projectName']
-#                                               == selected_project]
-#     merged_df = pd.merge(project_filtered_df, filtered_df,
-#                          on='projectName', how='inner')
-#     print(">>>>>>>>", merged_df)
-#     project_story_count = merged_df.groupby(['sprintName', 'story status_x'])[
-#         'storyKey'].count().reset_index()
-#     project_story_count = project_story_count.rename(
-#         columns={'story status_x': 'story status'})
-#     project_story_count.columns = ['sprintName',
-#                                    'story status', 'storyKey_count']
-#     x_variable = 'sprintName'
-#     x_label = 'Sprint'
-# else:
-
-#     x_variable = 'projectName'
-#     x_label = 'Project'
-
-
-# # Create the column chart using Plotly Express
-
-# color_map = {'done': 'green', 'not done': 'red'}
-
-# fig1 = px.bar(
-#     project_story_count,
-#     x=x_variable,
-#     y='storyKey_count',
-#     color='story status',
-#     barmode='group',
-#     title=f'Stories by {"Project" if x_variable == "projectName" else "Sprint"}',
-#     labels={x_variable: x_label, 'storyKey_count': 'Story'},
-#     color_discrete_map=color_map,
-
-
-# )
-
-
 # Calculate story counts by story type
 storytype_story_count = filtered_df.groupby(
     'storyType').size().reset_index(name='story_count')
@@ -141,10 +97,6 @@ fig2.update_traces(
 )
 
 
-# Display the treemap
-# st.plotly_chart(fig2)
-
-
 # Calculate the count of each story status
 status_counts = filtered_df['story status'].value_counts()
 
@@ -152,9 +104,6 @@ status_counts = filtered_df['story status'].value_counts()
 # Create a pie chart
 fig3 = px.pie(status_counts, values=status_counts,
               names=status_counts.index, title='Story Status Distribution', color_discrete_sequence=['green', 'red'])
-
-# Display the pie chart
-# st.plotly_chart(fig3)
 
 
 # Rename the "parentId(List)" column
@@ -166,6 +115,7 @@ parent_id_counts = filtered_df['parent Id'].value_counts()
 
 
 # Create another pie chart
+# Adjust the width ratios as needed
 fig4 = px.pie(
     parent_id_counts,
     values=parent_id_counts,
@@ -174,10 +124,9 @@ fig4 = px.pie(
     title='Story by Parent ID',
 )
 
-
+# Display graphs in a row
 with st.container():
-    # Display KPIs in a row
-    # Adjust the width ratios as needed
+
     col1, col2,  = st.columns([1, 1],  gap="medium")
     with col1:
         st.markdown(
@@ -197,8 +146,6 @@ with st.container():
             unsafe_allow_html=True
         )
 
-    # Display Graphs in a row
-    # Adjust the width ratios as needed
     col3, col4 = st.columns([1, 1], gap="medium")
     with col3:
 
