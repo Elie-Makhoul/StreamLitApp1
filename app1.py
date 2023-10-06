@@ -59,49 +59,49 @@ project_story_count = filtered_df.groupby(['projectName', 'story status'])[
 project_story_count.columns = ['projectName',
                                'story status',  'storyKey_count']
 
-sprint_df = filtered_df[['projectName', 'sprintName']]
 
-merged_df = pd.merge(project_story_count, sprint_df,
-                     on='projectName', how='left')
+# # Create a list of unique project names
+# unique_projects = project_story_count['projectName'].unique().tolist()
 
+# # Selectbox to choose a project (default to showing all projects)
+# selected_project = st.selectbox('Select a project:', ['All'] + unique_projects)
 
-# Create the column chart using Plotly Express
+# if selected_project != 'All':
+#     project_filtered_df = project_story_count[project_story_count['projectName']
+#                                               == selected_project]
+#     merged_df = pd.merge(project_filtered_df, filtered_df,
+#                          on='projectName', how='inner')
+#     print(">>>>>>>>", merged_df)
+#     project_story_count = merged_df.groupby(['sprintName', 'story status_x'])[
+#         'storyKey'].count().reset_index()
+#     project_story_count = project_story_count.rename(
+#         columns={'story status_x': 'story status'})
+#     project_story_count.columns = ['sprintName',
+#                                    'story status', 'storyKey_count']
+#     x_variable = 'sprintName'
+#     x_label = 'Sprint'
+# else:
 
-color_map = {'done': 'green', 'not done': 'red'}
-
-fig1 = px.bar(
-    project_story_count,
-    x='projectName',
-    y='storyKey_count',
-    color='story status',
-    barmode='group',
-    title='Stories by Project',
-    labels={'projectName': 'Project', 'storyKey_count': 'Story'},
-    color_discrete_map=color_map,
-
-
-)
-# Update hover data to show the count of each story status
-fig1.update_traces(texttemplate='%{y}', textposition='outside')
-fig1.update_layout(legend_title_text='Story Status')
-
-fig1.update_layout(
-    font=dict(
-        family='Arial, sans-serif',
-        size=11,
-        color='black',
-    ),
+#     x_variable = 'projectName'
+#     x_label = 'Project'
 
 
-    legend=dict(
-        orientation='h',  # Set the orientation to horizontal
-        x=0,  # Move the legend to the left
-        y=1.1  # Adjust the position if needed
-    ),
+# # Create the column chart using Plotly Express
 
-    height=600,
+# color_map = {'done': 'green', 'not done': 'red'}
 
-)
+# fig1 = px.bar(
+#     project_story_count,
+#     x=x_variable,
+#     y='storyKey_count',
+#     color='story status',
+#     barmode='group',
+#     title=f'Stories by {"Project" if x_variable == "projectName" else "Sprint"}',
+#     labels={x_variable: x_label, 'storyKey_count': 'Story'},
+#     color_discrete_map=color_map,
+
+
+# )
 
 
 # Calculate story counts by story type
@@ -131,7 +131,7 @@ fig2.update_layout(
         size=16,
         color='black'
     ),
-    height=600
+    height=650
 )
 
 fig2.update_traces(
@@ -201,6 +201,75 @@ with st.container():
     # Adjust the width ratios as needed
     col3, col4 = st.columns([1, 1], gap="medium")
     with col3:
+
+        unique_projects = project_story_count['projectName'].unique().tolist()
+
+    # Selectbox to choose a project (default to showing all projects)
+        selected_project = st.selectbox(
+            'Select a project:', ['All'] + unique_projects)
+
+        if selected_project != 'All':
+            project_filtered_df = project_story_count[project_story_count['projectName']
+                                                      == selected_project]
+
+            # print(">>>>>", project_filtered_df)
+
+            merged_df = pd.merge(project_filtered_df, filtered_df,
+                                 on='projectName', how='inner')
+            print(">>>>>>>>", merged_df)
+            project_story_count = merged_df.groupby(['sprintName', 'story status_x'])[
+                'storyKey_count'].count().reset_index()
+
+            project_story_count = project_story_count.rename(
+                columns={'story status_x': 'story status'})
+            project_story_count.columns = ['sprintName',
+                                           'story status', 'storyKey_count']
+            # print("*****", project_story_count)
+            x_variable = 'sprintName'
+            x_label = 'Sprint'
+        else:
+
+            x_variable = 'projectName'
+            x_label = 'Project'
+
+    # Create the column chart using Plotly Express
+
+        color_map = {'done': 'green', 'not done': 'red'}
+
+        fig1 = px.bar(
+            project_story_count,
+            x=x_variable,
+            y='storyKey_count',
+            color='story status',
+            barmode='group',
+            title=f'Stories by {"Project" if x_variable == "projectName" else "Sprint"}',
+            labels={x_variable: x_label, 'storyKey_count': 'Story'},
+            color_discrete_map=color_map,
+
+
+        )
+        # Update hover data to show the count of each story status
+        fig1.update_traces(texttemplate='%{y}', textposition='outside')
+        fig1.update_layout(legend_title_text='Story Status')
+
+        fig1.update_layout(
+            font=dict(
+                family='Arial, sans-serif',
+                size=11,
+                color='black',
+            ),
+
+
+            legend=dict(
+                orientation='h',  # Set the orientation to horizontal
+                x=0,  # Move the legend to the left
+                y=1.1  # Adjust the position if needed
+            ),
+
+            height=640,
+
+        )
+
         st.plotly_chart(fig1, use_container_width=True)
     with col4:
         st.plotly_chart(fig2, use_container_width=True)
