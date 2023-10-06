@@ -9,6 +9,7 @@ from streamlit_dynamic_filters import DynamicFilters
 
 df = pd.read_csv("csv/project_Data_modified.csv")
 
+
 # Set page configuration
 st.set_page_config(page_title="Project's Dashboard",
                    page_icon=":bar_chart:", layout="wide")
@@ -162,7 +163,7 @@ with st.container():
 
             merged_df = pd.merge(project_filtered_df, filtered_df,
                                  on='projectName', how='inner')
-            print(">>>>>>>>", merged_df)
+            # print(">>>>>>>>", merged_df)
             project_story_count = merged_df.groupby(['sprintName', 'story status_x'])[
                 'storyKey_count'].count().reset_index()
 
