@@ -161,16 +161,6 @@ with st.container():
             project_story_count = project_filtered_df.groupby(['sprintName', 'story status'])[
                 'storyKey'].count().reset_index()
 
-            # merged_df = pd.merge(project_filtered_df, filtered_df,
-            #                      on='projectName', how='inner')
-            # # print(">>>>>>>>", merged_df)
-            # project_story_count = merged_df.groupby(['sprintName', 'story status_x'])[
-            #     'storyKey_count'].count().reset_index()
-
-            # project_story_count = project_story_count.rename(
-            #     columns={'story status_x': 'story status'})
-            # project_story_count.columns = ['sprintName',
-            #                                'story status', 'storyKey_count']
             # # print("*****", project_story_count)
             x_variable = 'sprintName'
             x_label = 'Sprint'
