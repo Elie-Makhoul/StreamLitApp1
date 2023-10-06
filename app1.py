@@ -115,7 +115,7 @@ parent_id_counts = filtered_df['parent Id'].value_counts()
 
 
 # Create another pie chart
-# Adjust the width ratios as needed
+
 fig4 = px.pie(
     parent_id_counts,
     values=parent_id_counts,
@@ -124,7 +124,7 @@ fig4 = px.pie(
     title='Story by Parent ID',
 )
 
-# Display graphs in a row
+# Display KPIs
 with st.container():
 
     col1, col2,  = st.columns([1, 1],  gap="medium")
@@ -147,6 +147,7 @@ with st.container():
         )
 
     col3, col4 = st.columns([1, 1], gap="medium")
+
     with col3:
 
         unique_projects = project_story_count['projectName'].unique().tolist()
