@@ -156,7 +156,7 @@ with st.container():
             project_filtered_df = filtered_df[filtered_df['projectName']
                                               == selected_project]
 
-            print(">>>>>", project_filtered_df)
+            # print(">>>>>", project_filtered_df)
 
             project_story_count = project_filtered_df.groupby(['sprintName', 'story status'])[
                 'storyKey'].count().reset_index()
